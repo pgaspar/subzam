@@ -8,7 +8,22 @@
 </head>
 <body>
 
-<%= yield %>
+<div class="container">
+  <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
+  <% if alert %><div class="alert alert-warning"><%= alert %></div><% end %>
+
+  <div class="page-header">
+    <h1>SubZam</h1>
+  </div>
+
+  <%= yield %>
+</div>
+
+<div id="footer">
+  <div class="container">
+    <p class="text-muted">Codebits 2014</p>
+  </div>
+</div>
 
 </body>
 </html>
