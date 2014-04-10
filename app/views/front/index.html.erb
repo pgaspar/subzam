@@ -1,0 +1,6 @@
+<%= form_tag :search, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :query, params[:query], :placeholder => 'Titanic', :autofocus => 'true' %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>

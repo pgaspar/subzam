@@ -1,0 +1,32 @@
+ <%= link_to '« Back', :back %>
+
+<h2><%= params[:query] %></h2>
+
+<table>
+  <tr>
+    <th>Movie Name</th>
+    <td><%= @sub.movie_name %></td>
+  </tr>
+  <tr>
+    <th>File Name</th>
+    <td><%= @sub.filename %></td>
+  </tr>
+  <tr>
+    <th>Year</th>
+    <td><%= @sub.raw_data["MovieYear"] %></td>
+  </tr>
+  <tr>
+    <th>IMDB</th>
+    <td><%= link_to "ID #{@sub.raw_data["IDMovieImdb"]}", "http://www.imdb.com/title/tt#{@sub.raw_data["IDMovieImdb"]}", target: '_blank' %></td>
+  </tr>
+  <tr>
+    <th>IMDB Rating</th>
+    <td><%= @sub.raw_data["MovieImdbRating"] %></td>
+  </tr>
+</table>
+
+<br>
+
+<% @sub.extract_text.split("\n").each do |line| %>
+  <%= strip_tags line %><br>
+<% end %>
