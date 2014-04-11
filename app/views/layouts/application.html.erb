@@ -4,11 +4,14 @@
   <title>Subzam</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.0/css/ink.css">
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<div class="container">
+<div class="ink-grid">
+    <div class="column-group">
+        <div class="all-100">
   <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
   <% if alert %><div class="alert alert-warning"><%= alert %></div><% end %>
 
@@ -17,6 +20,8 @@
   </div>
 
   <%= yield %>
+        </div>
+    </div>   
 </div>
 
 <div id="footer">
