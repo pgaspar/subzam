@@ -27,5 +27,5 @@
     </tr>
   </table>
 
-  <%= bar_chart @movie.keywords, :height => '500px', :library => {:title => 'Frequent words'} %>
+  <%= pie_chart @movie.keywords, :height => '500px', :library => {:title => 'Frequent words', pieHole: 0, pieSliceText: 'label'} %>
 </div>
