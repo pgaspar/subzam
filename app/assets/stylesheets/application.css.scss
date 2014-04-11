@@ -36,3 +36,21 @@
 .main-wrapper {
     padding-top: 120px;
 }
+
+.result-item {
+    text-align: left;
+    
+    .imdb-link {
+        display: block;
+        color: #aaa;
+    }
+}
+
+.red {
+    color: #f00;
+}
+
+mark {
+    background: #ffb !important;
+    padding: 1px 5px;
+}

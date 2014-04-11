@@ -1,48 +1,35 @@
-<p class="lead">Search through the contents of <%= Movie.count %> Movies.</p>
-
-<%= form_tag :fulltext_movies, :method => 'get', :class => 'form-inline' do %>
-  <div class="form-group">
-    <%= label_tag :query, 'Find Movie by quote', :class => 'sr-only' %>
-    <%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => 'form-control' %>
-    <%= submit_tag "Search", :name => nil, :class => 'btn btn-default' %>
-  </div>
+<div class="results-wrapper">
+<div class="page-logo">
+    <%= image_tag 'subzam.png' %>
+</div>
+<p class="condensed-300 small ">Search through the contents of <strong><%= Movie.count %> movies</strong>.</p>
+<%= form_tag :fulltext_movies, :method => 'get', :class => 'ink-form top-space' do %>
+    <div class="column-group push-center">
+      <div class="control-group all-60">
+            <div class="control  append-button">
+                <span><%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => '' %></span>
+                <%= submit_tag "Search", :name => nil, :class => 'ink-button orange' %>
+            </div>
+      </div>
+    </div>
 <% end %>
 
-<br><br>
-<h2>Results</h2>
-<br>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Score</th>
-      <th>Name</th>
-      <th>Year</th>
-      <th>Imdb</th>
-      <th>Imdb rating</th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="vertical-space">
+    <h2 style="margin: 0">Results</h2>
+    <small class="fw-300">(Found <%= @results.hits.count %> Movies)</small>
+</div>
+    
+<div class="result-wrapper column-group all-80 push-center">
     <% @results.each_hit_with_result do |hit, movie| %>
-      <tr>
-        <td><%= hit.score %></td>
-        <td><%= link_to movie.name, movie %></td>
-        <td><%= movie.year %></td>
-        <td><%= link_to movie.imdb_id, imdb_url(movie.imdb_id), target: '_blank' %></td>
-        <td><%= movie.imdb_rating %></td>
-      </tr>
-      <% hit.highlights.each do |h| %>
-        <tr>
-          <td></td>
-          <td colspan="4"><%= h.format { |fragment| content_tag(:b, fragment) }.html_safe %></td>
-        </tr>
-      <% end %>
+        <div class="result-item bottom-space all-100">
+            <div class=""><%= link_to movie.name, movie %> <small>(<%= movie.year %>)</small></div>
+            
+              <% hit.highlights.each do |h| %>
+                <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
+              <% end %>
+            <%= link_to imdb_url(movie.imdb_id), target: '_blank', class: 'imdb-link small' do %>
+             IMDB Rating: <%= movie.imdb_rating %>
+            <% end %>
+        </div>
     <% end %>
-  </tbody>
-</table>
-
-
-<br>
-
-<%= link_to 'Home', root_path %>
+</div>
