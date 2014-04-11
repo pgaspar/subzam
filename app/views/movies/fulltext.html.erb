@@ -1,0 +1,48 @@
+<p class="lead">Search through the contents of <%= Movie.count %> Movies.</p>
+
+<%= form_tag :fulltext_movies, :method => 'get', :class => 'form-inline' do %>
+  <div class="form-group">
+    <%= label_tag :query, 'Find Movie by quote', :class => 'sr-only' %>
+    <%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => 'form-control' %>
+    <%= submit_tag "Search", :name => nil, :class => 'btn btn-default' %>
+  </div>
+<% end %>
+
+<br><br>
+<h2>Results</h2>
+<br>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Name</th>
+      <th>Year</th>
+      <th>Imdb</th>
+      <th>Imdb rating</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @results.each_hit_with_result do |hit, movie| %>
+      <tr>
+        <td><%= hit.score %></td>
+        <td><%= link_to movie.name, movie %></td>
+        <td><%= movie.year %></td>
+        <td><%= link_to movie.imdb_id, imdb_url(movie.imdb_id), target: '_blank' %></td>
+        <td><%= movie.imdb_rating %></td>
+      </tr>
+      <% hit.highlights.each do |h| %>
+        <tr>
+          <td></td>
+          <td colspan="4"><%= h.format { |fragment| content_tag(:b, fragment) }.html_safe %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+<%= link_to 'Home', root_path %>
