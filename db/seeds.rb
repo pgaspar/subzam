@@ -20,7 +20,7 @@ def filter_all
     line = line.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
     rnd, num_votes, rating, title = line.match(/^\s+([^\s]+)\s+(\d+)\s+([\d.]+)\s+(.+)$/i).captures rescue next
     
-    unless num_votes.to_i < 30000 || rating.to_f < 7.0
+    unless num_votes.to_i < 80000 || rating.to_f < 7.5
       #puts title
       import_movie(title)
     end
