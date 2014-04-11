@@ -3,7 +3,7 @@ class Movie < ActiveRecord::Base
   validates :imdb_id, uniqueness: true
 
   searchable do
-    text :content, :stored => true
+    text :content, :stored => true do |m| ActionView::Base.full_sanitizer.sanitize(m.content) end
     text :name, :boost => 0.005
   end
 
@@ -17,5 +17,10 @@ class Movie < ActiveRecord::Base
       imdb_rating:  sub.raw_data["MovieImdbRating"],
       name:         sub.movie_name
     })
+  end
+
+  def keywords
+    doc = Pismo::Document.new(content)
+    tags = doc.keywords(:stem_at => 4).reject{|p| p.first.length < 3 || Stopwords.is?(p.first)}.map {|t| t[0]}
   end
 end
