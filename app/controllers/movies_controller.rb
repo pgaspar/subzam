@@ -55,13 +55,16 @@ class MoviesController < ApplicationController
 
   def fulltext
 
-    @movies = Movie.search do
-      fulltext params[:query]
-    end.results
+    @results = Movie.search do
+      fulltext params[:query] do
+        highlight :content
+      end
 
-    if @movies.any?
-      render :index
-    else
+      # Order
+      order_by(:score, :desc)
+    end
+
+    unless @results.results.any?
       redirect_to root_path(query: params[:query]), alert: 'Could not find any Movie with your query... Try again!'
     end
 
@@ -71,10 +74,13 @@ class MoviesController < ApplicationController
     sub = FetchSubtitle.new.search params[:query]
 
     if sub
-      @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
-      @movie ||= Movie.create_from_sub(sub)
-
-      render :show
+      begin
+        @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
+        @movie ||= Movie.create_from_sub(sub)
+        render :show
+      rescue Zlib::GzipFile::Error => e
+        redirect_to movies_path(query: params[:query]), alert: 'Leech Limit reached... Try again!'
+      end
     else
       redirect_to movies_path(query: params[:query]), alert: 'Error processing Movie... Try again!'
     end

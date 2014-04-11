@@ -4,6 +4,7 @@ class Movie < ActiveRecord::Base
 
   searchable do
     text :content, :stored => true
+    text :name, :boost => 0.005
   end
 
   def self.create_from_sub(sub)
