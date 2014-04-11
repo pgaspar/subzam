@@ -4,31 +4,33 @@
   <title>Subzam</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.0/css/ink.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.0/css/ink-flex.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="page-wrapper">
+    <div class="ink-grid vertical-space">
+        <div class="column-group">
+            <div class="all-100">
 
-<div class="ink-grid">
-    <div class="column-group">
-        <div class="all-100">
-  <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
-  <% if alert %><div class="alert alert-warning"><%= alert %></div><% end %>
-
-  <div class="page-header">
-    <h1>SubZam</h1>
-  </div>
-
-  <%= yield %>
+                <%= yield %>
+                <div class="all-60 push-center">
+                <% if notice %><div class="ink-alert basic info"><%= notice %></div><% end %>
+                <% if alert %><div class="ink-alert basic warning"><%= alert %></div><% end %>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>  
+<footer class="clearfix" id="footer">
+    <div class="ink-grid">
+        <div class="column-group">
+            <p class="note">Codebits &copy; 2014</p>
         </div>
-    </div>   
-</div>
-
-<div id="footer">
-  <div class="container">
-    <p class="text-muted">Codebits 2014</p>
-  </div>
-</div>
-
+        
+        
+    </div>
+</footer>
 </body>
 </html>
