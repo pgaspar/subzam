@@ -21,6 +21,6 @@ class Movie < ActiveRecord::Base
 
   def keywords
     doc = Pismo::Document.new(content)
-    tags = doc.keywords(:stem_at => 4).reject{|p| p.first.length < 3 || Stopwords.is?(p.first)}.map {|t| t[0]}
+    tags = doc.keywords(:stem_at => 4, :limit => 20).reject{|p| p.first.length < 3 || !Stopwords.valid?(p.first)}
   end
 end
