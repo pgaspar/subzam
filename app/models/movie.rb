@@ -2,6 +2,10 @@ class Movie < ActiveRecord::Base
 
   validates :imdb_id, uniqueness: true
 
+  searchable do
+    text :content, :stored => true
+  end
+
   def self.create_from_sub(sub)
     self.create({
       content:      sub.extract_text,

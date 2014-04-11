@@ -54,16 +54,23 @@ class MoviesController < ApplicationController
   end
 
   def find
-    sub = FetchSubtitle.new.search params[:query]
-    
-    if sub
-      @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
-      @movie ||= Movie.create_from_sub(sub)
 
+    @movie = Movie.search { fulltext params[:query] }.results.first
+    if @movie
       render :show
     else
-      redirect_to root_path(query: params[:query]), alert: 'Error processing Movie... Try again!'
+      redirect_to root_path(query: params[:query]), alert: 'Could not find any Movie with your query... Try again!'
     end
+#    sub = FetchSubtitle.new.search params[:query]
+#    
+#    if sub
+#      @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
+#      @movie ||= Movie.create_from_sub(sub)
+#
+#      render :show
+#    else
+#      redirect_to root_path(query: params[:query]), alert: 'Error processing Movie... Try again!'
+#    end
   end
 
   private
