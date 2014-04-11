@@ -1,36 +1,31 @@
- <%= link_to '« Back', :back %>
+<div class="movie-wrapper all-60">
+  <%= link_to '« Back', :back %>
 
-<h2><%= params[:query] || @movie.name %></h2>
+  <div class="page-logo">
+    <br>
+    <h2><%= params[:query] || @movie.name %></h2>
+  </div>
 
-<br>
+  <br>
 
-<table class="table table-bordered">
-  <tr>
-    <th>Movie Name</th>
-    <td><%= @movie.name %></td>
-  </tr>
-  <tr>
-    <th>File Name</th>
-    <td><%= @movie.filename %></td>
-  </tr>
-  <tr>
-    <th>Year</th>
-    <td><%= @movie.year %></td>
-  </tr>
-  <tr>
-    <th>IMDB</th>
-    <td><%= link_to "ID #{@movie.imdb_id}", imdb_url(@movie.imdb_id), target: '_blank' %></td>
-  </tr>
-  <tr>
-    <th>IMDB Rating</th>
-    <td><%= @movie.imdb_rating %></td>
-  </tr>
-</table>
+  <table class="ink-table bordered">
+    <tr>
+      <th>Movie Name</th>
+      <td><%= @movie.name %></td>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <td><%= @movie.year %></td>
+    </tr>
+    <tr>
+      <th>IMDB</th>
+      <td><%= link_to "ID #{@movie.imdb_id}", imdb_url(@movie.imdb_id), target: '_blank' %></td>
+    </tr>
+    <tr>
+      <th>IMDB Rating</th>
+      <td><%= @movie.imdb_rating %></td>
+    </tr>
+  </table>
 
-<br>
-
-<%= bar_chart @movie.keywords, :height => '500px' %>
-
-<% @movie.content.split("\n").each do |line| %>
-  <%#= strip_tags line %><!--<br>-->
-<% end %>
+  <%= bar_chart @movie.keywords, :height => '500px', :library => {:title => 'Frequent words'} %>
+</div>
