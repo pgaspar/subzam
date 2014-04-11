@@ -71,10 +71,13 @@ class MoviesController < ApplicationController
     sub = FetchSubtitle.new.search params[:query]
 
     if sub
-      @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
-      @movie ||= Movie.create_from_sub(sub)
-
-      render :show
+      begin
+        @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
+        @movie ||= Movie.create_from_sub(sub)
+        render :show
+      rescue Zlib::GzipFile::Error => e
+        redirect_to movies_path(query: params[:query]), alert: 'Leech Limit reached... Try again!'
+      end
     else
       redirect_to movies_path(query: params[:query]), alert: 'Error processing Movie... Try again!'
     end
