@@ -18,4 +18,9 @@ class Movie < ActiveRecord::Base
       name:         sub.movie_name
     })
   end
+
+  def keywords
+    doc = Pismo::Document.new(content)
+    tags = doc.keywords(:stem_at => 4).reject{|p| p.first.length < 3 || Stopwords.is?(p.first)}.map {|t| t[0]}
+  end
 end

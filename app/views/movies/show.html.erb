@@ -29,6 +29,8 @@
 
 <br>
 
+<%= @movie.keywords %>
+
 <% @movie.content.split("\n").each do |line| %>
-  <%= strip_tags line %><br>
+  <%#= strip_tags line %><br>
 <% end %>
