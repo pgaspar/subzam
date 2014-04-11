@@ -1,0 +1,34 @@
+ <%= link_to '« Back', :back %>
+
+<h2><%= params[:query] || @movie.name %></h2>
+
+<br>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Movie Name</th>
+    <td><%= @movie.name %></td>
+  </tr>
+  <tr>
+    <th>File Name</th>
+    <td><%= @movie.filename %></td>
+  </tr>
+  <tr>
+    <th>Year</th>
+    <td><%= @movie.year %></td>
+  </tr>
+  <tr>
+    <th>IMDB</th>
+    <td><%= link_to "ID #{@movie.imdb_id}", imdb_url(@movie.imdb_id), target: '_blank' %></td>
+  </tr>
+  <tr>
+    <th>IMDB Rating</th>
+    <td><%= @movie.imdb_rating %></td>
+  </tr>
+</table>
+
+<br>
+
+<% @movie.content.split("\n").each do |line| %>
+  <%= strip_tags line %><br>
+<% end %>
