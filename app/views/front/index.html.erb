@@ -1,15 +1,13 @@
-<p class="lead">Search movies below.</p>
+<p class="lead">Search through the contents of <%= Movie.count %> Movies.</p>
 
-<%= form_tag :find_movies, :method => 'get', :class => 'form-inline' do %>
+<%= form_tag :fulltext_movies, :method => 'get', :class => 'form-inline' do %>
   <div class="form-group">
-    <%= label_tag :query, 'Find a Movie', :class => 'sr-only' %>
-    <%= text_field_tag :query, params[:query], :placeholder => 'Titanic', :autofocus => 'true', :class => 'form-control' %>
+    <%= label_tag :query, 'Find Movie by quote', :class => 'sr-only' %>
+    <%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => 'form-control' %>
     <%= submit_tag "Search", :name => nil, :class => 'btn btn-default' %>
   </div>
 <% end %>
 
 <br><br>
-<h2>Movies</h2>
+<h4><%= link_to 'Browse Movies', :movies %></h4>
 <br>
-
-<%= render 'movies/list' %>

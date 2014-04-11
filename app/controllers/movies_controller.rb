@@ -53,24 +53,31 @@ class MoviesController < ApplicationController
     end
   end
 
-  def find
+  def fulltext
 
-    @movie = Movie.search { fulltext params[:query] }.results.first
-    if @movie
-      render :show
+    @movies = Movie.search do
+      fulltext params[:query]
+    end.results
+
+    if @movies.any?
+      render :index
     else
       redirect_to root_path(query: params[:query]), alert: 'Could not find any Movie with your query... Try again!'
     end
-#    sub = FetchSubtitle.new.search params[:query]
-#    
-#    if sub
-#      @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
-#      @movie ||= Movie.create_from_sub(sub)
-#
-#      render :show
-#    else
-#      redirect_to root_path(query: params[:query]), alert: 'Error processing Movie... Try again!'
-#    end
+
+  end
+
+  def find
+    sub = FetchSubtitle.new.search params[:query]
+
+    if sub
+      @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
+      @movie ||= Movie.create_from_sub(sub)
+
+      render :show
+    else
+      redirect_to movies_path(query: params[:query]), alert: 'Error processing Movie... Try again!'
+    end
   end
 
   private
