@@ -42,3 +42,5 @@ gem 'osdb'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'sunspot_rails'
 gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
+gem 'pismo'
+gem 'stopwords', :git => 'git://github.com/pgaspar/stopwords.git'
