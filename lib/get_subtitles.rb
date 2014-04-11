@@ -30,7 +30,7 @@ class FetchSubtitle
     OSDb::Language.from_locale(ENV['LANG'] || 'en_US.UTF-8')
   end
 
-  def search(movie_name)
+  def search(movie_name, searches=SEARCH_ENGINES)
     language = "eng"
     
     begin
@@ -38,14 +38,14 @@ class FetchSubtitle
 
       movie_file = OSDb::MovieFile.new(movie_name)
 
-      if sub = subtitle_finder.find_sub_for(movie_file, language)
+      if sub = subtitle_finder(searches).find_sub_for(movie_file, language)
         #download_sub!(sub.body, movie_file.path)
         #download_sub!(sub.extract_text, movie_file.path + '_parsed')
       else
         puts "* No sub found"
       end
-      puts
-    rescue Exception => e
+      #puts
+    rescue RuntimeError => e
       report_exception(e)
       return false
     end
@@ -63,14 +63,14 @@ class FetchSubtitle
     puts
   end
 
-  def subtitle_finder
-    @subtitle_finder ||= OSDb::SubtitleFinder.new(search_engines, finders, selectors)
+  def subtitle_finder(search)
+    @subtitle_finder ||= OSDb::SubtitleFinder.new(search_engines(search), finders, selectors)
   end
 
   SEARCH_ENGINES = [OSDb::Search::IMDB, OSDb::Search::Name, OSDb::Search::Path]
 
-  def search_engines
-    SEARCH_ENGINES.map { |se| se.new(server) }
+  def search_engines(engines=SEARCH_ENGINES)
+    engines.map { |se| se.new(server) }
   end
 
   def finders
