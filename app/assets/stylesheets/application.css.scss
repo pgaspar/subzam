@@ -77,6 +77,15 @@ mark {
 
     .result-count {
         margin: 5px 0 10px 0;
+        
+        h4 {
+            color: #aaa;
+            margin-bottom: 40px;
+            
+            em {
+                color: #666;
+            }
+        }
     }
 
     .result-item {
@@ -84,15 +93,24 @@ mark {
     }
 }
 
+.pie-wrapper {
+    h4 {
+        margin: 0;
+    }
+}
+
 .highlight {
-    margin-bottom: 5px;
     display: block;
     position: relative;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
 
     .timestamp {
         position: absolute;
         left: -75px;
         color: #BBB;
+        font-style: normal;
         a { color: #BBB; }
     }
 }
