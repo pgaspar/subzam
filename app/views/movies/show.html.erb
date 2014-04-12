@@ -3,7 +3,7 @@
 
   <div class="page-logo">
     <br>
-    <h2><%= params[:query] || @movie.name %></h2>
+    <h2><%= @movie.name %></h2>
   </div>
 
   <br>
@@ -27,6 +27,23 @@
       <td><%= @movie.imdb_rating %></td>
     </tr>
   </table>
+
+  <% if params[:query] %>
+    <div class="result-wrapper column-group all-90 push-center">
+      <% @results.each_hit_with_result do |hit, movie| %>
+        <div class="result-item bottom-space all-100">
+          <div class="result-count">
+            <h4><%= pluralize(hit.highlights.size, 'hit') %> for <em><%= params[:query] %></em>:</h4>
+          </div>
+
+          <% hit.highlights.each do |h| %>
+            <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
+            <br>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <%= pie_chart @movie.keywords, :height => '500px', :library => {:title => 'Frequent words', pieHole: 0, pieSliceText: 'label'} %>
 </div>

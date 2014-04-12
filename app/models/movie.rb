@@ -5,6 +5,7 @@ class Movie < ActiveRecord::Base
   searchable do
     text :content, :stored => true do |m| ActionView::Base.full_sanitizer.sanitize(m.content) end
     text :name, :boost => 0.005
+    integer :movie_id do |m| m.id end
   end
 
   def self.create_from_sub(sub)
