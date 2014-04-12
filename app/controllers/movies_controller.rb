@@ -96,10 +96,12 @@ class MoviesController < ApplicationController
       @results = Movie.search do
 
         fulltext params[:query] do
-          highlight :content, :max_snippets => 100
+          highlight :content, :max_snippets => 1000
 
-          phrase_fields :content => 2.0
+          phrase_fields :content => 4.0
         end
+
+        paginate :per_page => 30
 
         with(:movie_id, movie.id) if movie
 
