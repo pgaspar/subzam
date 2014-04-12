@@ -44,6 +44,15 @@
         display: block;
         color: #aaa;
     }
+
+    .poster {
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    img {
+        height: 75px;
+    }
 }
 
 .red {
@@ -57,4 +66,12 @@ mark {
 
 .movie-wrapper {
     margin: auto;
+
+    table.ink-table.bordered tr th:first-child {
+        border-left: #bbbbbb 1px solid;
+    }
+
+    table img {
+        height: 200px;
+    }
 }

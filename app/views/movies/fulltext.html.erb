@@ -19,17 +19,23 @@
     <small class="fw-300">(Found <%= @results.hits.count %> Movies)</small>
 </div>
     
-<div class="result-wrapper column-group all-80 push-center">
+<div class="result-wrapper column-group all-75 push-center">
     <% @results.each_hit_with_result do |hit, movie| %>
         <div class="result-item bottom-space all-100">
-            <div class=""><%= link_to movie.name, movie %> <small>(<%= movie.year %>)</small></div>
+            <div class="poster all-10 push-left">
+              <%= link_to image_tag(movie.poster), movie %>
+            </div>
             
-              <% hit.highlights.each do |h| %>
-                <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
+            <div class="all-90 push-right">
+              <div class=""><%= link_to movie.name, movie %> <small>(<%= movie.year %>)</small></div>
+              
+                <% hit.highlights.each do |h| %>
+                  <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
+                <% end %>
+              <%= link_to imdb_url(movie.imdb_id), target: '_blank', class: 'imdb-link small' do %>
+               IMDB Rating: <%= movie.imdb_rating %>
               <% end %>
-            <%= link_to imdb_url(movie.imdb_id), target: '_blank', class: 'imdb-link small' do %>
-             IMDB Rating: <%= movie.imdb_rating %>
-            <% end %>
+            </div>
         </div>
     <% end %>
 </div>

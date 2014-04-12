@@ -45,3 +45,4 @@ gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in developm
 gem 'pismo'
 gem 'stopwords', :git => 'git://github.com/pgaspar/stopwords.git'
 gem 'chartkick'
+gem 'filmbuff', :git => 'git://github.com/sachse/filmbuff.git'
