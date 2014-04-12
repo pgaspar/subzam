@@ -36,7 +36,7 @@
             <h4><%= pluralize(hit.highlights.size, 'hit') %> for <em><%= params[:query] %></em>:</h4>
           </div>
 
-          <% hit.highlights.each do |h| %>
+          <% hit.highlights.slice(0,30).each do |h| %>
             <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
             <br>
           <% end %>
