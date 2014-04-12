@@ -1,5 +1,5 @@
 <div class="movie-wrapper all-60">
-  <%= link_to '« Back', params[:query] ? fulltext_movies_path(params) : :root %>
+  <%= link_to '« Back', params[:query] ? fulltext_movies_path(query: params[:query]) : :root %>
 
   <div class="page-logo">
     <br>

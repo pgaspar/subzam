@@ -56,7 +56,7 @@ class MoviesController < ApplicationController
 
   def fulltext
 
-    unless @results.try(:results).try(:any?)
+    unless @results.try(:hits).try(:any?)
       redirect_to root_path(query: params[:query]), alert: 'Could not find any Movie with your query... Try again!'
     end
 
