@@ -3,14 +3,14 @@ class Movie < ActiveRecord::Base
   validates :imdb_id, uniqueness: true
 
   searchable do
-    text :content, :stored => true do |m| ActionView::Base.full_sanitizer.sanitize(m.content) end
+    text :content, :stored => true do |m| ActionView::Base.full_sanitizer.sanitize(m.content).gsub("\r\n", "\n") end
     text :name, :boost => 0.005
     integer :movie_id do |m| m.id end
   end
 
   def self.create_from_sub(sub)
     self.create({
-      content:      sub.extract_text,
+      content:      Movie.extract_timed_text(sub.body),
       original_srt: sub.body,
       imdb_id:      sub.raw_data["IDMovieImdb"],
       year:         sub.raw_data["MovieYear"],
@@ -22,13 +22,47 @@ class Movie < ActiveRecord::Base
   end
 
   def keywords
-    doc = Pismo::Document.new(content)
+    clean_content = MoviesController.helpers.strip_timestamps(content)
+    doc = Pismo::Document.new(clean_content)
     tags = doc.keywords(:stem_at => 4, :limit => 15).reject{|p| p.first.length < 3 || !Stopwords.valid?(p.first)}#.map {|k,v| ["#{k} (#{v})", v]}
   end
 
   def poster
     self.update_attribute(:poster_url, Movie.find_poster(imdb_id)) unless self.poster_url
     self.poster_url
+  end
+
+  def extract_timed_text
+    Movie.extract_timed_text(original_srt)
+  end
+
+  def self.extract_timed_text(body)
+    text = []
+
+    body.split("\r\n").each do |line|
+      next if line =~ /^\d+$/ || line.empty?
+
+      if line.include?(' --> ')
+        time = line.match(/^([^,]+),.+$/i).captures rescue nil
+        p line unless time
+        text << "[#{time.first}]"
+      else
+        text << line
+      end
+    end
+
+    text.join("\n")
+  end
+
+  def self.extract_text(body)
+    text = []
+
+    body.split("\r\n").each do |line|
+      next if line =~ /^\d+$/ || line.include?(' --> ') || line.empty?
+      text << line
+    end
+
+    text.join("\n")
   end
 
   private

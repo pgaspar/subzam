@@ -1,0 +1,23 @@
+<script>
+
+  $(document).ready(function(){
+
+    comparator = function(a, b) {
+      a_time = $(a).find('.timestamp').text();
+      b_time = $(b).find('.timestamp').text();
+
+      var k1 = Date.parse('01/01/2011 ' + a_time), k2 = Date.parse('01/01/2011 ' + b_time);
+      return (k1 > k2) ? 1 : ( (k2 > k1) ? -1 : 0 );
+    }
+
+    $('.js-sort').on('click', function(e) {
+      e.preventDefault();
+
+      $('.highlight').sortElements(comparator, function(){
+        return this;
+      });
+    })
+
+  });
+
+</script>
