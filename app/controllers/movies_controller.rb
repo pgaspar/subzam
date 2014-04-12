@@ -2,6 +2,7 @@ require 'get_subtitles'
 
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :find_query, only: [:show, :fulltext]
 
   # GET /movies
   # GET /movies.json
@@ -55,15 +56,6 @@ class MoviesController < ApplicationController
 
   def fulltext
 
-    @results = Movie.search do
-      fulltext params[:query] do
-        highlight :content
-      end
-
-      # Order
-      order_by(:score, :desc)
-    end
-
     unless @results.results.any?
       redirect_to root_path(query: params[:query]), alert: 'Could not find any Movie with your query... Try again!'
     end
@@ -95,5 +87,24 @@ class MoviesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
       params.require(:movie).permit(:content, :imdb_id, :year, :filename, :imdb_rating, :name)
+    end
+
+    def find_query
+      return unless params[:query]
+
+      movie = @movie
+      @results = Movie.search do
+
+        fulltext params[:query] do
+          highlight :content, :max_snippets => 100
+
+          phrase_fields :content => 2.0
+        end
+
+        with(:movie_id, movie.id) if movie
+
+        # Order
+        order_by(:score, :desc)
+      end
     end
 end
