@@ -7,12 +7,18 @@
     <div class="column-group push-center">
       <div class="control-group all-60">
             <div class="control  append-button">
-                <span><%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => '' %></span>
+                <span><%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => 'js-input' %></span>
                 <%= submit_tag "Search", :name => nil, :class => 'ink-button orange' %>
             </div>
       </div>
     </div>
 <% end %>
+
+<%= link_to '#', class: 'small js-micro' do %>
+    <i class="fa fa-microphone"></i> Use Voice
+<% end %>
+
+<%= render 'front/speech_script' %>
 
 <div class="vertical-space">
     <h2 style="margin: 0">Results</h2>

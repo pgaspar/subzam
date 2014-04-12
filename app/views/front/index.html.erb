@@ -1,62 +1,24 @@
 <div class="main-wrapper">
-<div class="page-logo">
-    <%= image_tag 'subzam.png' %>
-</div>
-
-<p class="condensed-300 small ">Search through the contents of <strong><%= Movie.count %> movies</strong>.</p>
-
-<%= form_tag :fulltext_movies, :method => 'get', :class => 'ink-form top-space' do %>
-    <div class="column-group push-center">
-      <div class="control-group all-60">
-            <div class="control  append-button">
-                <span><%= text_field_tag :query, params[:query], :placeholder => "I am your father", :autofocus => 'true', :class => 'js-input' %></span>
-                <%= submit_tag "Search", :name => nil, :class => 'ink-button orange' %>
-            </div>
-      </div>
+    <div class="page-logo">
+        <%= image_tag 'subzam.png' %>
     </div>
-<% end %>
 
-<%= link_to '#', class: 'small js-micro' do %>
-    <i class="fa fa-microphone"></i> Use Voice
-<% end %>
+    <p class="condensed-300 small ">Search through the contents of <strong><%= Movie.count %> movies</strong>.</p>
+
+    <%= form_tag :fulltext_movies, :method => 'get', :class => 'ink-form top-space' do %>
+        <div class="column-group push-center">
+          <div class="control-group all-60">
+                <div class="control  append-button">
+                    <span><%= text_field_tag :query, params[:query], :placeholder => "I am your father", :autofocus => 'true', :class => 'js-input' %></span>
+                    <%= submit_tag "Search", :name => nil, :class => 'ink-button orange' %>
+                </div>
+          </div>
+        </div>
+    <% end %>
+
+    <%= link_to '#', class: 'small js-micro' do %>
+        <i class="fa fa-microphone"></i> Use Voice
+    <% end %>
+
+    <%= render 'speech_script' %>
 </div>
-<script>
-    var recognition = new webkitSpeechRecognition();
-    var bad_speech = false;
-    
-    recognition.lang = "en";
- $(document).ready(function(){
-    $('.js-micro').on('click', function(e){
-        recognition.start();
-        e.preventDefault();
-    });
- });
-    
-    recognition.onresult = function (event) {
-        for (var i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-                $('.js-input').val(event.results[i][0].transcript);
-            }
-        }
-        
-        bad_speech = false;
-    };
-    
-    recognition.onstart = function() {
-        console.log('recording');
-        $('.js-micro').html('<span class="red"><i class="fa fa-circle"></i> Recording...</span>');
-      };
-    
-    recognition.onend = function() {
-        console.log('stoped');
-        $('.js-micro').html('<i class="fa fa-microphone"></i> Use Voice');
-        if (!bad_speech) {
-            $('.ink-form').submit();
-        }
-      };
-    
-    recognition.onerror = function(event) {
-        console.log('error');
-        bad_speech = true;
-    }
-</script>
