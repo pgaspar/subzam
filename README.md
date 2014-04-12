@@ -1,5 +1,5 @@
+![SubZam](https://raw.githubusercontent.com/pgaspar/subzam/master/app/assets/images/subzam.png)
 # SubZam
-
 This is the source for the Codebits 2014 [project #517](https://codebits.eu/intra/s/project/517).
 
 The costs of hosting a Solr server (using [websolr](http://websolr.com) for example), the size of the DB (~60Mb) and the lack of time to look for alternatives prevented us from having SubZam up and running on the web. If you can help us out with this, do get in touch!
