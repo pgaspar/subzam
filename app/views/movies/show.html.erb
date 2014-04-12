@@ -23,7 +23,7 @@
         <div class="result-item bottom-space all-100">
           <div class="result-count all-100">
             <h4 class="fw-400 large push-left">Showing <%= pluralize(hit.highlights.size, 'hit') %> for <em class="fw-700"><%= params[:query] %></em></h4>
-            <a class=".js-sort sort-highlight push-right">Sort by time</a>
+            <a class="js-sort sort-highlight small push-right" style="margin-right: -75px">Sort by time</a>
           </div>
         <div class="all-100 push-center" style="clear: both; margin-left: 75px">
           <% timed_highlights(hit.highlights.slice(0,30)).each do |h, time| %>
