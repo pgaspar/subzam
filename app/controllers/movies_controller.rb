@@ -56,7 +56,7 @@ class MoviesController < ApplicationController
 
   def fulltext
 
-    unless @results.results.any?
+    unless @results.try(:results).try(:any?)
       redirect_to root_path(query: params[:query]), alert: 'Could not find any Movie with your query... Try again!'
     end
 
@@ -90,7 +90,7 @@ class MoviesController < ApplicationController
     end
 
     def find_query
-      return unless params[:query]
+      return unless params[:query] && params[:query] != ''
 
       movie = @movie
       @results = Movie.search do
