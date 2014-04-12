@@ -36,13 +36,18 @@
             <h4><%= pluralize(hit.highlights.size, 'hit') %> for <em><%= params[:query] %></em>:</h4>
           </div>
 
-          <% hit.highlights.slice(0,30).each do |h| %>
-            <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
+          <% timed_highlights(hit.highlights.slice(0,30)).each do |h, time| %>
+            <em class="fw-300 highlight">
+              <span class="timestamp"><a href="#" class="sort_by_time"><%= time %></a></span>
+              &hellip;<%= strip_timestamps(h.format { |fragment| content_tag(:mark, fragment) }).html_safe %>&hellip;
+            </em>
             <br>
           <% end %>
         </div>
       <% end %>
     </div>
+
+    <%= render 'order_highlights' %>
   <% end %>
 
   <%= pie_chart @movie.keywords, :height => '500px', :library => {:title => 'Frequent words', pieHole: 0, pieSliceText: 'label'} %>

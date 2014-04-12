@@ -42,7 +42,7 @@
               <div class=""><%= link_to movie.name, movie_path(movie, query: params[:query]) %> <small>(<%= movie.year %>)</small> <small>(<%= pluralize hit.highlights.size, 'hit' %>)</small></div>
               
                 <% if h = hit.highlights.first %>
-                  <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
+                  <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= strip_timestamps(h.format { |fragment| content_tag(:mark, fragment) }).html_safe %>&hellip;</em>
                 <% end %>
               <%= link_to imdb_url(movie.imdb_id), target: '_blank', class: 'imdb-link small' do %>
                IMDB Rating: <%= movie.imdb_rating %>
