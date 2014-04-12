@@ -17,6 +17,12 @@
 <div class="vertical-space">
     <h2 style="margin: 0">Results</h2>
     <small class="fw-300">(Found <%= @results.total %> Movies)</small>
+
+    <div style="width: 450px; margin: auto;">
+      <% match    = @results.total %>
+      <% no_match = Movie.count - match %>
+      <%= pie_chart [["#{match} match", match], ["#{no_match} don't match", no_match]], :height => '100px', :width => '100px', :library => {pieHole: 0} %>
+    </div>
 </div>
     
 <div class="result-wrapper column-group all-75 push-center">
