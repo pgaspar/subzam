@@ -1,49 +1,45 @@
 <div class="movie-wrapper all-60">
-  <%= link_to '« Back', params[:query] ? fulltext_movies_path(query: params[:query]) : :root %>
-
   <div class="page-logo">
-    <br>
-    <h2><%= @movie.name %></h2>
+    <%= link_to image_tag('subzam.png'), root_path %>
   </div>
 
-  <br>
-
-  <table class="ink-table bordered">
-    <tr>
-      <td rowspan="4"><%= image_tag @movie.poster %></td>
-      <th>Movie Name</th>
-      <td><%= link_to @movie.name, @movie %></td>
-    </tr>
-    <tr>
-      <th>Year</th>
-      <td><%= @movie.year %></td>
-    </tr>
-    <tr>
-      <th>IMDB</th>
-      <td><%= link_to "ID #{@movie.imdb_id}", imdb_url(@movie.imdb_id), target: '_blank' %></td>
-    </tr>
-    <tr>
-      <th>IMDB Rating</th>
-      <td><%= @movie.imdb_rating %></td>
-    </tr>
-  </table>
+  <%= link_to 'Return to Results', params[:query] ? fulltext_movies_path(query: params[:query]) : :root, class: 'ink-button small vertical-space' %>
+    
+  <div class="movie-info column-group push-center all-100 horizontal-gutters vertical-space">
+        <div class="all-30 push-left"><%= image_tag @movie.poster %></div>
+        <div class="all-70 push-right align-left">
+            <h2><%= @movie.name %></h2>
+            <div class="small" style="margin-top:-20px; margin-bottom: 10px;"><%= @movie.year %></div>
+            <%= link_to imdb_url(@movie.imdb_id), target: '_blank', class: 'imdb-link small' do %>
+               IMDB Rating: <%= @movie.imdb_rating %>
+            <% end %>
+      </div>
+  </div>
+    
 
   <% if params[:query] %>
-    <div class="result-wrapper column-group all-90 push-center">
+    <div class="result-wrapper column-group all-100 push-center">
       <% @results.each_hit_with_result do |hit, movie| %>
         <div class="result-item bottom-space all-100">
-          <div class="result-count">
-            <h4><%= pluralize(hit.highlights.size, 'hit') %> for <em><%= params[:query] %></em>:</h4>
+          <div class="result-count all-100">
+            <h4 class="fw-400 large push-left">Showing <%= pluralize(hit.highlights.size, 'hit') %> for <em class="fw-700"><%= params[:query] %></em></h4>
+            <a class="js-sort sort-highlight small push-right" style="margin-right: -75px">Sort by time</a>
           </div>
-
-          <% hit.highlights.slice(0,30).each do |h| %>
-            <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= h.format { |fragment| content_tag(:mark, fragment) }.html_safe %>&hellip;</em>
-            <br>
+        <div class="all-100 push-center" style="clear: both; margin-left: 75px">
+          <% timed_highlights(hit.highlights.slice(0,30)).each do |h, time| %>
+            <em class="fw-300 highlight">
+              <span class="timestamp"><%= time %></span>
+              <span class="quote">&hellip;<%= strip_timestamps(h.format { |fragment| content_tag(:mark, fragment) }).html_safe %>&hellip;</span>
+            </em>
           <% end %>
+            
+        </div>
         </div>
       <% end %>
     </div>
+
+    <%= render 'order_highlights' %>
   <% end %>
 
-  <%= pie_chart @movie.keywords, :height => '500px', :library => {:title => 'Frequent words', pieHole: 0, pieSliceText: 'label'} %>
+  <div class="pie-wrapper all-100 vertical-space"><h4 class="align-left">Frequent Words</h4><%= pie_chart @movie.keywords,  :height => '350px' , :library => {pieHole: 0, pieSliceText: 'label'} %></div>
 </div>
