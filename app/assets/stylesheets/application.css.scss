@@ -78,4 +78,21 @@ mark {
     .result-count {
         margin: 5px 0 10px 0;
     }
+
+    .result-item {
+        position: relative;
+    }
+}
+
+.highlight {
+    margin-bottom: 5px;
+    display: block;
+    position: relative;
+
+    .timestamp {
+        position: absolute;
+        left: -75px;
+        color: #BBB;
+        a { color: #BBB; }
+    }
 }
