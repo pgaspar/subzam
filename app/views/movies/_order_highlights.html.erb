@@ -10,7 +10,7 @@
       return (k1 > k2) ? 1 : ( (k2 > k1) ? -1 : 0 );
     }
 
-    $('.sort_by_time').on('click', function(e) {
+    $('.js-sort').on('click', function(e) {
       e.preventDefault();
 
       $('.highlight').sortElements(comparator, function(){

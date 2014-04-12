@@ -7,7 +7,7 @@
     <div class="column-group push-center">
       <div class="control-group all-60">
             <div class="control  append-button">
-                <span><%= text_field_tag :query, params[:query], :placeholder => "Luke, I'm your father", :autofocus => 'true', :class => 'js-input' %></span>
+                <span><%= text_field_tag :query, params[:query], :placeholder => "I am your father", :autofocus => 'true', :class => 'js-input' %></span>
                 <%= submit_tag "Search", :name => nil, :class => 'ink-button orange' %>
             </div>
       </div>
@@ -23,15 +23,9 @@
 <div class="vertical-space">
     <h2 style="margin: 0">Results</h2>
     <small class="fw-300">(Found <%= @results.total %> Movies)</small>
-
-    <div style="width: 450px; margin: auto;">
-      <% match    = @results.total %>
-      <% no_match = Movie.count - match %>
-      <%= pie_chart [["#{match} match", match], ["#{no_match} don't match", no_match]], :height => '100px', :width => '100px', :library => {pieHole: 0} %>
-    </div>
 </div>
     
-<div class="result-wrapper column-group all-75 push-center">
+<div class="result-wrapper column-group all-65 push-center">
     <% @results.each_hit_with_result do |hit, movie| %>
         <div class="result-item bottom-space all-100">
             <div class="poster all-10 push-left">
@@ -39,7 +33,7 @@
             </div>
             
             <div class="all-90 push-right">
-              <div class=""><%= link_to movie.name, movie_path(movie, query: params[:query]) %> <small>(<%= movie.year %>)</small> <small>(<%= pluralize hit.highlights.size, 'hit' %>)</small></div>
+              <div class=""><%= link_to movie.name, movie_path(movie, query: params[:query]) %> <small>&mdash; <%= movie.year %></small> <small style="color: #aaa" class="fw-300">(<%= pluralize hit.highlights.size, 'hit' %>)</small></div>
               
                 <% if h = hit.highlights.first %>
                   <em class="fw-300" style="margin-bottom: 5px; display:block">&hellip;<%= strip_timestamps(h.format { |fragment| content_tag(:mark, fragment) }).html_safe %>&hellip;</em>
@@ -50,4 +44,9 @@
             </div>
         </div>
     <% end %>
+</div>
+<div style="width: 450px; margin: 0 auto 50px;">
+  <% match    = @results.total %>
+  <% no_match = Movie.count - match %>
+  <%= pie_chart [["#{match} match", match], ["#{no_match} don't match", no_match]], :height => '100px', :width => '100px', :library => {pieHole: 0} %>
 </div>
