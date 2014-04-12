@@ -1,5 +1,5 @@
 <div class="movie-wrapper all-60">
-  <%= link_to '« Back', :back %>
+  <%= link_to '« Back', params[:query] ? fulltext_movies_path(params) : :root %>
 
   <div class="page-logo">
     <br>
@@ -12,7 +12,7 @@
     <tr>
       <td rowspan="4"><%= image_tag @movie.poster %></td>
       <th>Movie Name</th>
-      <td><%= @movie.name %></td>
+      <td><%= link_to @movie.name, @movie %></td>
     </tr>
     <tr>
       <th>Year</th>
