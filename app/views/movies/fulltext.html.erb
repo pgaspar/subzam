@@ -19,7 +19,7 @@
     <small class="fw-300">(Found <%= @results.hits.count %> Movies)</small>
 </div>
     
-<div class="result-wrapper column-group all-80 push-center">
+<div class="result-wrapper column-group all-60 push-center">
     <% @results.each_hit_with_result do |hit, movie| %>
         <div class="result-item bottom-space all-100">
             <div class=""><%= link_to movie.name, movie %> <small>(<%= movie.year %>)</small></div>
