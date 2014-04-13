@@ -3,12 +3,14 @@
     <%= link_to image_tag('subzam.png'), root_path %>
   </div>
 
-  <%= link_to 'Return to Results', params[:query] ? fulltext_movies_path(query: params[:query]) : :root, class: 'ink-button small vertical-space' %>
+  <% if params[:query] %>
+    <%= link_to 'Return to Results', fulltext_movies_path(query: params[:query]), class: 'ink-button small vertical-space' %>
+  <% end %>
     
   <div class="movie-info column-group push-center all-100 horizontal-gutters vertical-space">
         <div class="all-30 push-left"><%= image_tag @movie.poster %></div>
         <div class="all-70 push-right align-left">
-            <h2><%= @movie.name %></h2>
+            <h2><%= link_to @movie.name, @movie %></h2>
             <div class="small" style="margin-top:-20px; margin-bottom: 10px;"><%= @movie.year %></div>
             <%= link_to imdb_url(@movie.imdb_id), target: '_blank', class: 'imdb-link small' do %>
                IMDB Rating: <%= @movie.imdb_rating %>
