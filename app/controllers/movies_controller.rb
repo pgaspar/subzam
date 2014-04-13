@@ -69,7 +69,7 @@ class MoviesController < ApplicationController
       begin
         @movie = Movie.find_by(imdb_id: sub.raw_data["IDMovieImdb"])
         @movie ||= Movie.create_from_sub(sub)
-        render :show
+        redirect_to movie_path(@movie, query: params[:query])
       rescue Zlib::GzipFile::Error => e
         redirect_to movies_path(query: params[:query]), alert: 'Leech Limit reached... Try again!'
       end

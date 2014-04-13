@@ -1,10 +1,10 @@
-<p class="lead">Search movies below.</p>
+<p class="lead">Fetch movies (and their subtitles) below.</p>
 
-<%= form_tag :find_movies, :method => 'get', :class => 'form-inline' do %>
+<%= form_tag :fetch_movies, :method => 'get', :class => 'form-inline' do %>
   <div class="form-group">
-    <%= label_tag :query, 'Find a Movie', :class => 'sr-only' %>
+    <%= label_tag :query, 'Fetch a Movie', :class => 'sr-only' %>
     <%= text_field_tag :query, params[:query], :placeholder => 'Titanic', :autofocus => 'true', :class => 'form-control' %>
-    <%= submit_tag "Search", :name => nil, :class => 'btn btn-default' %>
+    <%= submit_tag "Fetch", :name => nil, :class => 'btn btn-default' %>
   </div>
 <% end %>
 

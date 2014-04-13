@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :movies do
     collection do
-      get 'find'
+      get 'fetch', action: :find
       get 'fulltext'
     end
   end
