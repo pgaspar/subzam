@@ -48,7 +48,7 @@ $ bundle install
 We've uploaded the same dataset we used on-stage. You can use this DB as your own.
 
 ```bash
-$ mv db/development.sqlite3.backup db/development.sqlite3
+$ cp db/development.sqlite3.backup db/development.sqlite3
 ```
 
 ### Full-Text Search engine
