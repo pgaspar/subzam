@@ -28,7 +28,7 @@ class Movie < ActiveRecord::Base
   end
 
   def poster
-    self.update_attribute(:poster_url, Movie.find_poster(imdb_id)) unless self.poster_url
+    self.update_attribute(:poster_url, Movie.find_poster(normalized_imdb_id)) unless self.poster_url
     self.poster_url
   end
 
@@ -67,7 +67,12 @@ class Movie < ActiveRecord::Base
 
   private
 
+  def normalized_imdb_id
+    '0' * (7 - imdb_id.size) + imdb_id
+  end
+
   def self.find_poster(id)
-    FilmBuff.new.look_up_id("tt#{'0'*(7-id.size)}#{id}").poster_url rescue nil
+    CanHazPoster.grab_poster_by_imdb(id)
+    #FilmBuff.new.look_up_id("tt#{id}").poster_url rescue nil
   end
 end

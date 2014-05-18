@@ -41,3 +41,15 @@ task :fetch_missing_original_srt => :environment do
   puts "-----> Movies missing original srt: #{Movie.where(original_srt: nil).count}"
   puts "-----> Done"
 end
+
+task :reset_poster_urls => :environment do
+  puts "-----> Reseting movie poster urls"
+  puts "-----> Movies: #{Movie.count}"
+  
+  Movie.all.each do |m|
+    m.poster_url = nil
+    m.poster
+  end
+  
+  puts "-----> Done"
+end
