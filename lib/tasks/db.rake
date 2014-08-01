@@ -47,8 +47,8 @@ task :reset_poster_urls => :environment do
   puts "-----> Movies: #{Movie.count}"
   
   Movie.all.each do |m|
-    m.poster_url = nil
-    m.poster
+    m.original_poster_url = nil
+    m.original_poster
   end
   
   puts "-----> Done"

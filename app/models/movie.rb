@@ -17,7 +17,7 @@ class Movie < ActiveRecord::Base
       filename:     sub.filename,
       imdb_rating:  sub.raw_data["MovieImdbRating"],
       name:         sub.movie_name,
-      poster_url:   Movie.find_poster(sub.raw_data["IDMovieImdb"]),
+      original_poster_url:   Movie.find_poster(sub.raw_data["IDMovieImdb"]),
     })
   end
 
@@ -27,9 +27,9 @@ class Movie < ActiveRecord::Base
     tags = doc.keywords(:stem_at => 4, :limit => 15).reject{|p| p.first.length < 3 || !Stopwords.valid?(p.first)}#.map {|k,v| ["#{k} (#{v})", v]}
   end
 
-  def poster
-    self.update_attribute(:poster_url, Movie.find_poster(normalized_imdb_id)) unless self.poster_url
-    self.poster_url
+  def original_poster
+    self.update_attribute(:original_poster_url, Movie.find_poster(normalized_imdb_id)) unless self.original_poster_url
+    self.original_poster_url
   end
 
   def extract_timed_text
@@ -73,6 +73,6 @@ class Movie < ActiveRecord::Base
 
   def self.find_poster(id)
     CanHazPoster.grab_poster_by_imdb(id)
-    #FilmBuff.new.look_up_id("tt#{id}").poster_url rescue nil
+    #FilmBuff.new.look_up_id("tt#{id}").original_poster_url rescue nil
   end
 end
