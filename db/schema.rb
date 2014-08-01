@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140801163315) do
+ActiveRecord::Schema.define(version: 20140801165340) do
 
   create_table "movies", force: true do |t|
     t.text     "content"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140801163315) do
     t.datetime "updated_at"
     t.text     "original_srt"
     t.string   "original_poster_url"
+    t.string   "poster"
   end
 
 end

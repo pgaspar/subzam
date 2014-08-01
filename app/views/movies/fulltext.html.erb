@@ -29,7 +29,7 @@
     <% @results.each_hit_with_result do |hit, movie| %>
         <div class="result-item bottom-space all-100">
             <div class="poster all-10 push-left">
-              <%= link_to image_tag(movie.original_poster), movie_path(movie, query: params[:query]) %>
+              <%= link_to image_tag(movie.poster.small), movie_path(movie, query: params[:query]) %>
             </div>
             
             <div class="all-90 push-right">

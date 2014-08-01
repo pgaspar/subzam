@@ -16,3 +16,5 @@
 /tmp
 /solr
 /log/*.log.lck
+
+/public/uploads/*

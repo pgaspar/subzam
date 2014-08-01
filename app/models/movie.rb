@@ -1,6 +1,7 @@
 class Movie < ActiveRecord::Base
 
   validates :imdb_id, uniqueness: true
+  mount_uploader :poster, PosterUploader
 
   searchable do
     text :content, :stored => true do |m| ActionView::Base.full_sanitizer.sanitize(m.content).gsub("\r\n", "\n") end
@@ -9,7 +10,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.create_from_sub(sub)
-    self.create({
+    mov = self.new({
       content:      Movie.extract_timed_text(sub.body),
       original_srt: sub.body,
       imdb_id:      sub.raw_data["IDMovieImdb"],
@@ -19,6 +20,9 @@ class Movie < ActiveRecord::Base
       name:         sub.movie_name,
       original_poster_url:   Movie.find_poster(sub.raw_data["IDMovieImdb"]),
     })
+    mov.remote_poster_url = mov.original_poster_url
+    mov.save!
+    mov
   end
 
   def keywords

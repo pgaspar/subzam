@@ -53,3 +53,15 @@ task :reset_poster_urls => :environment do
   
   puts "-----> Done"
 end
+
+task :cache_all_posters => :environment do
+  puts "-----> Reseting movie poster urls"
+  puts "-----> Movies: #{Movie.count}"
+
+  Movie.all.each do |m|
+    m.remote_poster_url = m.original_poster
+    m.save!
+  end
+
+  puts "-----> Done"
+end

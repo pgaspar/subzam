@@ -8,7 +8,7 @@
   <% end %>
     
   <div class="movie-info column-group push-center all-100 horizontal-gutters vertical-space">
-        <div class="all-30 push-left"><%= image_tag @movie.original_poster %></div>
+        <div class="all-30 push-left"><%= image_tag @movie.poster.medium %></div>
         <div class="all-70 push-right align-left">
             <h2><%= link_to @movie.name, @movie %></h2>
             <div class="small" style="margin-top:-20px; margin-bottom: 10px;"><%= @movie.year %></div>

@@ -45,6 +45,11 @@ GEM
     bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
     builder (3.2.2)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     chartkick (1.2.4)
     chronic (0.10.2)
     coffee-rails (4.0.1)
@@ -70,6 +75,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mini_magick (3.8.0)
+      subexec (~> 0.2.1)
     mini_portile (0.5.3)
     minitest (5.3.3)
     multi_json (1.10.0)
@@ -129,6 +136,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.9)
+    subexec (0.2.3)
     sunspot (2.1.0)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
@@ -157,10 +165,12 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   can_haz_poster!
+  carrierwave
   chartkick
   coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)
   jquery-rails
+  mini_magick
   osdb
   pismo
   rails (= 4.1.0)
