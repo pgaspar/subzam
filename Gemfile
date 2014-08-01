@@ -49,3 +49,4 @@ gem 'chartkick'
 gem 'can_haz_poster', :git => 'https://github.com/RKushnir/can_haz_poster.git'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'puma', group: :production
