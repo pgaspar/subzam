@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140801165340) do
+ActiveRecord::Schema.define(version: 20140801204744) do
 
   create_table "movies", force: true do |t|
     t.text     "content"
@@ -26,5 +26,7 @@ ActiveRecord::Schema.define(version: 20140801165340) do
     t.string   "original_poster_url"
     t.string   "poster"
   end
+
+  add_index "movies", ["imdb_id"], name: "index_movies_on_imdb_id"
 
 end
